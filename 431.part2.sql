@@ -1,3 +1,4 @@
+###Data Sourced from https://www.kaggle.com/datasets/murderaccountability/homicide-reports###
 create table data (recordId int primary key, agencyCode varchar(255), 
 				   agencyName varchar(255), agencyType varchar(255), 
 				   city varchar(255), states varchar(255), years varchar(255), 
