@@ -20,16 +20,17 @@ try:
     #queries
     print("Connection Successful")
     print("Here are your queries")
-    print("1. INSERT INTO agency (agencyCode,agencyName,agencyType,city) VALUES ('mycode','myagency','police','Ashburn')")
-    print("2. DELETE FROM agency WHERE agencyCode = 'mycode'")
-    print("3. UPDATE agency SET agencyName = 'myagency1' where agencyCode = 'mycode'")
-    print("4. Select * FROM agency WHERE city = 'Anchorage'")
-    print("5. SELECT max(recordId) FROM crime")
-    print("6. SELECT recordId, victimSex, victimAge FROM victim ORDER BY victimAge desc")
-    print("7. SELECT agency.agencyName, agency.city, locations.states FROM agency JOIN locations ON agency.city = locations.city")
-    print("8. SELECT COUNT(recordId),perpetratorSex from perpetrators GROUP BY perpetratorSex")
-    print("9. SELECT COUNT(recordId),weapon FROM crime WHERE agencyCode IN (SELECT agencyCode from agency where agency.city = 'Anchorage') GROUP BY weapon")
+    print("1. Create new agency with values ('mycode','myagency','police','Ashburn')")
+    print("2. Delete agency with agencyCode 'mycode'")
+    print("3. Update agency 'mycode' with a new agencyName")
+    print("4. Return all agencies in Anchorage")
+    print("5. Find largest recordId")
+    print("6. Return recordID, sex, and age from victims ordered by victimAge descending")
+    print("7. Return agencies and what state they operate in")
+    print("8. Return the number of male perpetrators vs. female perpetrators")
+    print("9. Return the number of crimes commited with each weapon in Anchorage")
     print("10. Error Testing")
+    print("11. Custom Query")
     user_query = int(input("Please type the number of the query you want "))
     
     #cursor
@@ -88,7 +89,18 @@ try:
 
         case 10:
             raise
-
+        case 11:
+            query = input("Please type your custom query here: ")
+            cur.execute(query)
+            if query[0].lower() == "s":
+                query = cur.fetchall()
+                for row in query:
+                    print(row)
+            elif query[0].lower() == "u" or "d" or "i":
+                conn.commit()
+            else:
+                print("Unrecognized input")
+                
 except (Exception, psycopg2.Error) as error:
     conn.rollback()
     print("Error Raised: ",error)
